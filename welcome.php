@@ -18,7 +18,7 @@ try {
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // prepare sql and bind parameters
-  $stmt = $conn->prepare("INSERT INTO myDB.MyGuests (email, nama, komentar)
+  $stmt = $conn->prepare("INSERT INTO progate.tugas (email, nama, komentar)
   VALUES (:email, :nama, :komentar)");
   $stmt->bindParam(':email', $email);
   $stmt->bindParam(':nama', $nama);
