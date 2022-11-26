@@ -1,7 +1,7 @@
 <html>
 <body>
 
-Welcome <?php echo $_POST["firstname"]; ?><br>
+Welcome <?php echo $_POST["nama"]; ?><br>
 Your email address is: <?php echo $_POST["email"]; 
 
 $servername = "ec2-52-70-45-163.compute-1.amazonaws.com";
@@ -9,20 +9,20 @@ $port="5432";
 $username = "dodoaucrkueiyb";
 $password = "d0cabcd343805d6858deac56b55b7aa7fe3aa0d1111d9ba64c6b1e8169e26db6";
 $dbname = "dephqj61jf8kuj";
-$firstname=$_POST["firstname"];
-$lastname=$_POST["lastname"];
 $email=$_POST["email"];
+$nama=$_POST["nama"];
+$komentar=$_POST["komentar"];
 try {
   $conn = new PDO("pgsql:host=$servername;port=$port;dbname=$dbname;user=$username;password=$password");
   // set the PDO error mode to exception
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // prepare sql and bind parameters
-  $stmt = $conn->prepare("INSERT INTO myDB.MyGuests (firstname, lastname, email)
-  VALUES (:firstname, :lastname, :email)");
-  $stmt->bindParam(':firstname', $firstname);
-  $stmt->bindParam(':lastname', $lastname);
+  $stmt = $conn->prepare("INSERT INTO myDB.MyGuests (email, nama, komentar)
+  VALUES (:email, :nama, :komentar)");
   $stmt->bindParam(':email', $email);
+  $stmt->bindParam(':nama', $nama);
+  $stmt->bindParam(':komentar', $komentar);
   $stmt->execute();
 
   echo "New records created successfully";
@@ -30,7 +30,7 @@ try {
   echo "Error: " . $e->getMessage();
 }
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>Id</th><th>Firstname</th><th>Lastname</th></tr>";
+echo "<tr><th>no</th><th>Nama</th><th>Komentar</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -53,7 +53,7 @@ class TableRows extends RecursiveIteratorIterator {
 try {
   $conn = new PDO("pgsql:host=$servername;port=$port;dbname=$dbname;user=$username;password=$password");
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $stmt = $conn->prepare("SELECT id, firstname, lastname FROM myDB.MyGuests");
+  $stmt = $conn->prepare("SELECT no, email, nama, komentar FROM progate.tugas");
   $stmt->execute();
 
   // set the resulting array to associative
