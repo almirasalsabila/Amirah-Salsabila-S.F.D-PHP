@@ -44,15 +44,15 @@
         </div>
       </div>
       <div class="contact-form">
-        <h3 class="section-title">Hubungi Kami</h3>
-        <p>Email (Wajib diisi)</p>
-        <form action="welcome.php" method="post">
-          First Name: <input type="text" name="firstname"><br>
-          Last Name: <input type="text" name="lastname"><br>
-          E-mail: <input type="text" name="email"><br>
-          <input type="submit">
-        </form>
-      </div>
+      <h3 class="section-title">Hubungi kami</h3>
+      <form action="welcome.php" method="post">
+        <p>Email:<input type="text" name="email"></p>
+        <p>Nama:<input type="text" name="nama"></p>
+        <p> Komentar:<input type="text" name="komentar"></p>
+        <input type="submit">
+      </form>
+        </div>
+    </div>
     </div>
     <div class="footer">
       <div class="footer-logo">Progate</div>
