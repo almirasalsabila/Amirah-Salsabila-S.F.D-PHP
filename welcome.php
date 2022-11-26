@@ -2,70 +2,37 @@
 <body>
 
 Welcome <?php echo $_POST["nama"]; ?><br>
-Your email address is: <?php echo $_POST["email"]; 
+Your Email adress is: <?php echo $_POST["email"]; ?>
 
-$servername = "ec2-52-70-45-163.compute-1.amazonaws.com";
-$port="5432";
-$username = "dodoaucrkueiyb";
-$password = "d0cabcd343805d6858deac56b55b7aa7fe3aa0d1111d9ba64c6b1e8169e26db6";
-$dbname = "dephqj61jf8kuj";
+<?php
+$servername="localhost";
+$username="root";
+$password="";
+$dbname="progate";
 $email=$_POST["email"];
 $nama=$_POST["nama"];
 $komentar=$_POST["komentar"];
-try {
-  $conn = new PDO("pgsql:host=$servername;port=$port;dbname=$dbname;user=$username;password=$password");
-  // set the PDO error mode to exception
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  // prepare sql and bind parameters
-  $stmt = $conn->prepare("INSERT INTO progate.tugas (email, nama, komentar)
-  VALUES (:email, :nama, :komentar)");
-  $stmt->bindParam(':email', $email);
-  $stmt->bindParam(':nama', $nama);
-  $stmt->bindParam(':komentar', $komentar);
-  $stmt->execute();
-
-  echo "New records created successfully";
-} catch(PDOException $e) {
-  echo "Error: " . $e->getMessage();
-}
-echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>no</th><th>Nama</th><th>Komentar</th></tr>";
-
-class TableRows extends RecursiveIteratorIterator {
-  function __construct($it) {
-    parent::__construct($it, self::LEAVES_ONLY);
-  }
-
-  function current() {
-    return "<td style='width:150px;border:1px solid black;'>" . parent::current(). "</td>";
-  }
-
-  function beginChildren() {
-    echo "<tr>";
-  }
-
-  function endChildren() {
-    echo "</tr>" . "\n";
-  }
+//Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+//Check connection
+if ($conn->connect_error) {
+    die("Connection failed:" . $conn->connect_error);
 }
 
-try {
-  $conn = new PDO("pgsql:host=$servername;port=$port;dbname=$dbname;user=$username;password=$password");
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $stmt = $conn->prepare("SELECT id, email, nama, komentar FROM progate.tugas");
-  $stmt->execute();
+$sql = "INSERT INTO tugas (email, nama, komentar)
+VALUES ('$email', '$nama', '$komentar')";
 
-  // set the resulting array to associative
-  $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-  foreach(new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k=>$v) {
-    echo $v;
-  }
-} catch(PDOException $e) {
-  echo "Error: " . $e->getMessage();
+if ($conn -> query($sql) === TRUE) {
+    echo "New records created succesfully";
+} else {
+    echo "Error: ". $sql . "<br>" . $conn->error;
 }
 
-$conn = null;
+$conn->close();
 ?>
+<br>
+<a href="http:/localhost/index.php">Data yang terdaftar</a>
+
 </body>
-</html>
+</html> 
