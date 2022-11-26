@@ -53,7 +53,7 @@ class TableRows extends RecursiveIteratorIterator {
 try {
   $conn = new PDO("pgsql:host=$servername;port=$port;dbname=$dbname;user=$username;password=$password");
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $stmt = $conn->prepare("SELECT no, email, nama, komentar FROM progate.tugas");
+  $stmt = $conn->prepare("SELECT id, email, nama, komentar FROM progate.tugas");
   $stmt->execute();
 
   // set the resulting array to associative
